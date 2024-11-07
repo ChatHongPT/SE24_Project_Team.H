@@ -9,6 +9,7 @@ from gui import CarSimulatorGUI
 
 def execute_command_callback(command, car_controller):
     if command == "ENGINE_BTN":
+        
         car_controller.toggle_engine() # 시동 ON / OFF
     elif command == "ACCELERATE":
         car_controller.accelerate() # 속도 +10
