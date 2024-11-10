@@ -13,6 +13,7 @@ def execute_command_callback(command, car_controller):
     elif command == "ACCELERATE":
         # 일정 속도 이상
         if car_controller.get_speed() >= 200:
+            print("200 이상으로 속도를 높힐 수 없음")
             return
 
         # 왼쪽 문 검증
