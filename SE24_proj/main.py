@@ -10,7 +10,9 @@ from gui import CarSimulatorGUI
 def execute_command_callback(command, car_controller):
     if command == "ENGINE_BTN":
         if car_controller.get_engine_status(): # 시동 ON -> OFF
-            if car_controller.get_speed() == 0: # 속도가 0이어야
+            if car_controller.get_speed() == 0 \
+                    and car_controller.get_left_door_status() == "CLOSED" \
+                    and car_controller.get_right_door_status() == "CLOSED": # 속도가 0이어고 모든 문이 닫혀 있어야
                 car_controller.toggle_engine() # ON -> OFF 동작
         else: # 시동 OFF -> ON
             car_controller.toggle_engine() # 시동 ON / OFF
