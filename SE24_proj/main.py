@@ -21,7 +21,7 @@ def execute_command_callback(command, car_controller):
                 car_controller.lock_left_door()
         else:
             car_controller.close_left_door()
-            car_controller.lock_left_door()git
+            car_controller.lock_left_door()
 
         # 오른쪽 문 검증
         if car_controller.get_right_door_status() == "Closed":
