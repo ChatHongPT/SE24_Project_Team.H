@@ -11,7 +11,33 @@ def execute_command_callback(command, car_controller):
     if command == "ENGINE_BTN":
         car_controller.toggle_engine() # 시동 ON / OFF
     elif command == "ACCELERATE":
-        car_controller.accelerate() # 속도 +10
+        # 일정 속도 이상
+        if car_controller.get_speed() >= 200:
+            return
+
+        # 왼쪽 문 검증
+        if car_controller.get_left_door_status() == "Clgit osed":
+            if car_controller.get_left_door_lock() == "unLocked":
+                car_controller.lock_left_door()
+        else:
+            car_controller.close_left_door()
+            car_controller.lock_left_door()
+
+        # 오른쪽 문 검증
+        if car_controller.get_right_door_status() == "Closed":
+            if car_controller.get_right_door_lock() == "unLocked":
+                car_controller.lock_right_door()
+        else:
+            car_controller.close_right_door()
+            car_controller.lock_right_door()
+
+        # 트렁크 검증
+        if car_controller.get_trunk_status() == "Opened":
+            car_controller.close_trunk()
+
+        # accelerate 자체에 엔진 조건이 걸려 있음
+        car_controller.accelerate()  # 속도 +10
+
     elif command == "BRAKE":
         car_controller.brake() # 속도 -10
     elif command == "LOCK":
