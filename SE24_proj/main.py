@@ -12,12 +12,23 @@ def execute_command_callback(command, car_controller):
         car_controller.toggle_engine() # 시동 ON / OFF
     elif command == "ACCELERATE":
         car_controller.accelerate() # 속도 +10
+        if car_controller.get_speed() >= 20:
+            print("주행 중이므로 문을 잠급니다.")
+            car_controller.lock_vehicle()
     elif command == "BRAKE":
         car_controller.brake() # 속도 -10
     elif command == "LOCK":
-        car_controller.lock_vehicle() # 차량잠금
+        if car_controller.get_lock_status() == "CLOSE":
+            print("이미 문이 잠겨있습니다.")
+        else:
+            car_controller.lock_vehicle() # 차량잠금
     elif command == "UNLOCK":
-        car_controller.unlock_vehicle() # 차량잠금해제
+        if (car_controller.get_speed()>=1):
+            print("Command failed: 주행 중으로 문을 열 수 없습니다.")
+        elif car_controller.get_lock_status() == "OPEN":
+            print("이미 문이 열려있습니다.")
+        else:
+            car_controller.unlock_vehicle() # 차량잠금해제
     elif command == "LEFT_DOOR_LOCK":
         car_controller.lock_left_door() # 왼쪽문 잠금
     elif command == "RIGHT_DOOR_LOCK":
