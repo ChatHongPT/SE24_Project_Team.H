@@ -61,26 +61,22 @@ def execute_command_callback(command, car_controller):
 
     elif command == "BRAKE":
 
-        # 왼쪽 문 검증
-        if car_controller.get_left_door_status() == "Closed":
-            if car_controller.get_left_door_lock() == "unLocked":
-                car_controller.lock_left_door()
-        else:
-            car_controller.close_left_door()
-            car_controller.lock_left_door()
+        # 브레이크는 가속이 선행되어야 하기 때문에 왼쪽, 오른쪽, 트렁크 검증이 필요없어 보임 (srs에는 명세되어 있지 않는 내용임)
 
-        # 오른쪽 문 검증
-        if car_controller.get_right_door_status() == "Closed":
-            if car_controller.get_right_door_lock() == "unLocked":
-                car_controller.lock_right_door()
-        else:
-            car_controller.close_right_door()
-            car_controller.lock_right_door()
+         if car_controller.get_trunk_status() == "Opened":
+            print("트렁크 문이 열려있습니다.")
+            return
+         if car_controller.get_right_door_status() == "Opened":
+            print("오른쪽 문이 열려있습니다. ")
+            return
+         if car_controller.get_left_door_status() == "Opened":
+            print("왼쪽 문이 열려있습니다. ")
+            return
 
-        # 트렁크 검증
-        if car_controller.get_trunk_status() == "Opened":
-            car_controller.close_trunk()
-        car_controller.brake() # 속도 -10
+         car_controller.brake()
+
+
+
     elif command == "LOCK":
         car_controller.lock_vehicle() # 차량잠금
     elif command == "UNLOCK":
