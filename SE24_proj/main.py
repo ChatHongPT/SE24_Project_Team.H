@@ -14,6 +14,7 @@ def execute_command_callback(command, car_controller):
         car_controller.accelerate() # 속도 +10
     elif command == "BRAKE":
         car_controller.brake() # 속도 -10
+        toggle_trunk_if_stopped(car_controller)  # 속도 0이면 트렁크 열기/닫기
     elif command == "LOCK":
         car_controller.lock_vehicle() # 차량잠금
     elif command == "UNLOCK":
@@ -38,6 +39,16 @@ def execute_command_callback(command, car_controller):
         car_controller.open_trunk() # 트렁크 열기
     elif command == "TRUNK_CLOSE":
         car_controller.close_trunk() # 트렁크 열기
+
+# 속도가 0일 때 트렁크를 열거나 닫는 함수
+def toggle_trunk_if_stopped(car_controller):
+    if car_controller.get_speed() == 0:
+        if car_controller.get_trunk_status():  # 트렁크가 닫혀 있으면
+            car_controller.open_trunk()
+            print("속도가 0이므로 트렁크를 엽니다.")
+        else:  # 트렁크가 열려 있으면
+            car_controller.close_trunk()
+            print("속도가 0이고 트렁크가 열려 있어 닫습니다.")
 
 # 파일 경로를 입력받는 함수
 # -> 가급적 수정하지 마세요.
