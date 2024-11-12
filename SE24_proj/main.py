@@ -5,7 +5,10 @@ from gui import CarSimulatorGUI
 
 # execute_command를 제어하는 콜백 함수
 def execute_command_callback(command, car_controller):
+    current_speed = car_controller.get_speed()
+
     if command == "ENGINE_BTN":
+<<<<<<< HEAD
         if car_controller.get_engine_status(): # 시동 ON -> OFF
             if car_controller.get_speed() == 0: # 속도가 0이어야
                 car_controller.toggle_engine() # ON -> OFF 동작
@@ -117,6 +120,74 @@ def execute_command_callback(command, car_controller):
             print("트렁크가 닫혔습니다.")
         else:
             print("트렁크가 이미 닫혀 있습니다.")
+=======
+        car_controller.toggle_engine()  # 시동 ON / OFF
+
+    elif command == "ACCELERATE":
+        car_controller.accelerate()  # 속도 +10
+
+    elif command == "BRAKE":
+        car_controller.brake()  # 속도 -10
+
+    elif command == "LOCK":
+        car_controller.lock_vehicle()  # 차량 잠금
+
+    elif command == "UNLOCK":
+        car_controller.unlock_vehicle()  # 차량 잠금 해제
+
+    elif command == "LEFT_DOOR_LOCK":
+        car_controller.lock_left_door() # 왼쪽문 잠금
+    elif command == "RIGHT_DOOR_LOCK":
+        car_controller.lock_right_door() # 오른쪽문 잠금
+
+    elif command == "LEFT_DOOR_UNLOCK":
+        car_controller.unlock_left_door() # 왼쪽문 잠금해제
+    elif command == "RIGHT_DOOR_UNLOCK":
+        car_controller.unlock_right_door() # 오른쪽문 잠금해제
+
+    if command == "LEFT_DOOR_OPEN":
+        if car_controller.get_left_door_status():  # 문이 이미 열려 있는지 확인
+            print("Command failed: 왼쪽 문이 이미 열려 있습니다.")
+            return
+        if car_controller.get_left_door_lock():  # 문이 잠겨 있는지 확인
+            print("Command failed: 왼쪽 문이 잠겨 있어 열 수 없습니다.")
+            return
+        car_controller.open_left_door()  # 문 열기
+        print("왼쪽 문이 열렸습니다.")
+
+    elif command == "RIGHT_DOOR_OPEN":
+        if car_controller.get_right_door_status():  # 문이 이미 열려 있는지 확인
+            print("Command failed: 오른쪽 문이 이미 열려 있습니다.")
+            return
+        if car_controller.get_right_door_lock():  # 문이 잠겨 있는지 확인
+            print("Command failed: 오른쪽 문이 잠겨 있어 열 수 없습니다.")
+            return
+        car_controller.open_right_door()  # 문 열기
+        print("오른쪽 문이 열렸습니다.")
+
+    # 문 닫기
+    elif command == "LEFT_DOOR_CLOSE":
+        if not car_controller.get_left_door_status():  # 문이 열려 있는 상태인지 확인
+            print("Command failed: 왼쪽 문이 이미 닫혀 있습니다.")
+            return
+        car_controller.close_left_door()  # 문 닫기
+        print("왼쪽 문이 닫혔습니다.")
+
+    elif command == "RIGHT_DOOR_CLOSE":
+        if not car_controller.get_right_door_status():  # 문이 열려 있는 상태인지 확인
+            print("Command failed: 오른쪽 문이 이미 닫혀 있습니다.")
+            return
+        car_controller.close_right_door()  # 문 닫기
+        print("오른쪽 문이 닫혔습니다.")
+
+    elif command == "TRUNK_OPEN":
+        car_controller.open_trunk()  # 트렁크 열기
+        print("트렁크가 열렸습니다.")
+
+    elif command == "TRUNK_CLOSE":
+        car_controller.close_trunk()  # 트렁크 닫기
+        print("트렁크가 닫혔습니다.")
+>>>>>>> origin/hongseok
 
 
 # 파일 경로를 입력받는 함수
