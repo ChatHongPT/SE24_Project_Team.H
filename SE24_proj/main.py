@@ -12,7 +12,7 @@ def execute_command_callback(command, car_controller):
         car_controller.toggle_engine() # 시동 ON / OFF
     elif command == "ACCELERATE":
         car_controller.accelerate() # 속도 +10
-        if car_controller.get_speed() >= 20:
+        if car_controller.get_speed() >= 10:
             print("주행 중이므로 문을 잠급니다.")
             car_controller.lock_vehicle()
     elif command == "BRAKE":
