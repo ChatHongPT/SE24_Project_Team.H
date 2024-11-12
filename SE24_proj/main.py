@@ -35,32 +35,39 @@ def execute_command_callback(command, car_controller):
     elif command == "RIGHT_DOOR_UNLOCK":
         car_controller.unlock_right_door() # 오른쪽문 잠금해제
 
-    elif command == "LEFT_DOOR_OPEN":
-        if car_controller.get_left_door_status() == "LOCKED":
+    if command == "LEFT_DOOR_OPEN":
+        if car_controller.get_left_door_status():  # 문이 이미 열려 있는지 확인
+            print("Command failed: 왼쪽 문이 이미 열려 있습니다.")
+            return
+        if car_controller.get_left_door_lock():  # 문이 잠겨 있는지 확인
             print("Command failed: 왼쪽 문이 잠겨 있어 열 수 없습니다.")
             return
-        car_controller.open_left_door()  # 왼쪽 문 열기
+        car_controller.open_left_door()  # 문 열기
         print("왼쪽 문이 열렸습니다.")
 
     elif command == "RIGHT_DOOR_OPEN":
-        if car_controller.get_right_door_status() == "LOCKED":
+        if car_controller.get_right_door_status():  # 문이 이미 열려 있는지 확인
+            print("Command failed: 오른쪽 문이 이미 열려 있습니다.")
+            return
+        if car_controller.get_right_door_lock():  # 문이 잠겨 있는지 확인
             print("Command failed: 오른쪽 문이 잠겨 있어 열 수 없습니다.")
             return
-        car_controller.open_right_door()  # 오른쪽 문 열기
+        car_controller.open_right_door()  # 문 열기
         print("오른쪽 문이 열렸습니다.")
 
+    # 문 닫기
     elif command == "LEFT_DOOR_CLOSE":
-        if car_controller.get_left_door_status() == "CLOSED":
+        if not car_controller.get_left_door_status():  # 문이 열려 있는 상태인지 확인
             print("Command failed: 왼쪽 문이 이미 닫혀 있습니다.")
             return
-        car_controller.close_left_door()  # 왼쪽 문 닫기
+        car_controller.close_left_door()  # 문 닫기
         print("왼쪽 문이 닫혔습니다.")
 
     elif command == "RIGHT_DOOR_CLOSE":
-        if car_controller.get_right_door_status() == "CLOSED":
+        if not car_controller.get_right_door_status():  # 문이 열려 있는 상태인지 확인
             print("Command failed: 오른쪽 문이 이미 닫혀 있습니다.")
             return
-        car_controller.close_right_door()  # 오른쪽 문 닫기
+        car_controller.close_right_door()  # 문 닫기
         print("오른쪽 문이 닫혔습니다.")
 
     elif command == "TRUNK_OPEN":
