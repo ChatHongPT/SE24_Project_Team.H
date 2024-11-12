@@ -5,7 +5,7 @@ from gui import CarSimulatorGUI
 
 # execute_command를 제어하는 콜백 함수
 def execute_command_callback(command, car_controller):
-    current_speed = car_controller.get_speed()
+    # current_speed = car_controller.get_speed()
 
     if command == "ENGINE_BTN":
         if car_controller.get_engine_status(): # 시동 ON -> OFF
@@ -13,7 +13,6 @@ def execute_command_callback(command, car_controller):
                 car_controller.toggle_engine() # ON -> OFF 동작
         else: # 시동 OFF -> ON
             car_controller.toggle_engine() # 시동 ON / OFF
-        car_controller.toggle_engine() # 시동 ON / OFF
 
     elif command == "ACCELERATE":
         if car_controller.get_speed() >= 200:
@@ -36,13 +35,13 @@ def execute_command_callback(command, car_controller):
          car_controller.brake()   # 감속 -10
 
     elif command == "LOCK":
-        if car_controller.get_lock_status() == True:
+        if car_controller.get_lock_status():
             print("이미 문이 잠겨있습니다.")
         elif car_controller.get_right_door_status() == "OPEN":
             print("Command failed: 오른쪽 문이 열려있습니다.")
         elif car_controller.get_left_door_status() == "OPEN":
             print("Command failed: 왼쪽 문이 열려있습니다.")
-        elif car_controller.get_trunk_status == False:
+        elif not car_controller.get_trunk_status:
             print("Commad failed: 트렁크가 열려있습니다.")
         else:
             car_controller.lock_vehicle()
@@ -52,7 +51,7 @@ def execute_command_callback(command, car_controller):
     elif command == "UNLOCK":
         if (car_controller.get_speed()>0):
             print("Command failed: 주행 중으로 문을 잠금 해제 할 수 없습니다.")
-        elif car_controller.get_lock_status() == True:
+        elif not car_controller.get_lock_status():
             print("이미 문의 잠금이 해제되어 있습니다.")
         elif car_controller.get_right_door_status() == "OPEN":
             print("오른쪽 문이 열려있습니다.")
@@ -77,13 +76,13 @@ def execute_command_callback(command, car_controller):
 
     elif command == "LEFT_DOOR_UNLOCK":
         if car_controller.get_speed() > 0:
-            print("Command failed: 멈춰라")
+            print("Command failed: 차량이 주행 중입니다. 왼쪽 문 잠금해제 불가")
             return
         car_controller.unlock_left_door()  # 왼쪽문 잠금해제
 
     elif command == "RIGHT_DOOR_UNLOCK":
         if car_controller.get_speed() > 0:
-            print("Command failed: 멈춰라")
+            print("Command failed: 차량이 주행 중입니다. 오른쪽 문 잠금해제 불가")
             return
         car_controller.unlock_right_door()  # 오른쪽문 잠금해제
 
