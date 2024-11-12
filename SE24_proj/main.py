@@ -27,6 +27,10 @@ def execute_command_callback(command, car_controller):
             print("Command failed: 주행 중으로 문을 열 수 없습니다.")
         elif car_controller.get_lock_status() == "OPEN":
             print("이미 문이 열려있습니다.")
+        elif car_controller.get_right_door_status() == "OPEN":
+            print("Command failed: 오른쪽 문이 열려있어 문을 잠글 수 없습니다.")
+        elif car_controller.get_left_door_status() == "OPEN":
+            print("Command failed: 왼쪽 문이 열려있어 문을 잠글 수 없습니다.")
         else:
             car_controller.unlock_vehicle() # 차량잠금해제
     elif command == "LEFT_DOOR_LOCK":
