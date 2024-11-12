@@ -39,20 +39,11 @@ def execute_command_callback(command, car_controller):
         if car_controller.get_speed > 0:
             print("Command failed: 멈춰라")
             return
-        # 문 열린 상태에선 잠금 작동 못하도록 완벽 처리하면 무의미한 코드 고민좀해보자
-        if car_controller.get_left_door_status() == "OPEN":
-            print("Command failed: 왼쪽문 닫아라")
-            return
         car_controller.unlock_left_door() # 왼쪽문 잠금해제
 
     elif command == "RIGHT_DOOR_UNLOCK":
         if car_controller.get_speed > 0:
             print("Command failed: 멈춰라")
-            return
-        # 문 열린 상태에선 잠금 작동 못하도록 완벽 처리하면 무의미한 코드 고민좀해보자
-        if car_controller.get_right_door_status() == "OPEN":
-            print(f"\nRight door status: {car_controller.get_right_door_status()}")
-            print("Command failed: 오른문 닫아라")
             return
         car_controller.unlock_right_door() # 오른쪽문 잠금해제
 
