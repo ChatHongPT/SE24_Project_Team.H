@@ -6,7 +6,7 @@ class Car:
         self.__trunk_status = trunk_status  # True = Closed / False = Opened
         self.__left_door_status = "CLOSED"  # "OPEN" or "CLOSED"
         self.__right_door_status = "CLOSED"  # "OPEN" or "CLOSED"
-        self.__left_door_lock = "LOCKED"  # "LOCKED" or "UNLOCKED"8
+        self.__left_door_lock = "LOCKED"  # "LOCKED" or "UNLOCKED"
         self.__right_door_lock = "LOCKED"  # "LOCKED" or "UNLOCKED"
 
     # 엔진 상태 읽기

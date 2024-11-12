@@ -6,7 +6,11 @@ from gui import CarSimulatorGUI
 # execute_command를 제어하는 콜백 함수
 def execute_command_callback(command, car_controller):
     if command == "ENGINE_BTN":
-        car_controller.toggle_engine()  # 시동 ON / OFF
+        if car_controller.get_engine_status(): # 시동 ON -> OFF
+            if car_controller.get_speed() == 0: # 속도가 0이어야
+                car_controller.toggle_engine() # ON -> OFF 동작
+        else: # 시동 OFF -> ON
+            car_controller.toggle_engine() # 시동 ON / OFF
     elif command == "ACCELERATE":
         car_controller.accelerate()  # 속도 +10
     elif command == "BRAKE":
