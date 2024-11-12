@@ -37,9 +37,37 @@ def execute_command_callback(command, car_controller):
          car_controller.brake()   # 감속 -10
 
     elif command == "LOCK":
+<<<<<<< HEAD
         car_controller.lock_vehicle()  # 차량잠금
     elif command == "UNLOCK":
         car_controller.unlock_vehicle()  # 차량잠금해제
+=======
+        if car_controller.get_lock_status() == True:
+            print("이미 문이 잠겨있습니다.")
+        elif car_controller.get_right_door_status() == "OPEN":
+            print("Command failed: 오른쪽 문이 열려있습니다.")
+        elif car_controller.get_left_door_status() == "OPEN":
+            print("Command failed: 왼쪽 문이 열려있습니다.")
+        elif car_controller.get_trunk_status == False:
+            print("Commad failed: 트렁크가 열려있습니다.")
+        else:
+            car_controller.lock_vehicle()
+            car_controller.lock_left_door()
+            car_controller.lock_right_door() # 차량잠금
+    elif command == "UNLOCK":
+        if (car_controller.get_speed()>0):
+            print("Command failed: 주행 중으로 문을 잠금 해제 할 수 없습니다.")
+        elif car_controller.get_lock_status() == True:
+            print("이미 문의 잠금이 해제되어 있습니다.")
+        elif car_controller.get_right_door_status() == "OPEN":
+            print("오른쪽 문이 열려있습니다.")
+        elif car_controller.get_left_door_status() == "OPEN":
+            print("왼쪽 문이 열려있습니다.")
+        else:
+            car_controller.unlock_vehicle()
+            car_controller.unlock_left_door()
+            car_controller.unlock_right_door() # 차량잠금해제
+>>>>>>> origin/daein
     elif command == "LEFT_DOOR_LOCK":
         if car_controller.get_left_door_status() == "OPEN":
             print("Command failed: 왼쪽문 닫아라")
