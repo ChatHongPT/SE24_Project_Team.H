@@ -12,12 +12,12 @@ def execute_command_callback(command, car_controller):
         car_controller.toggle_engine() # 시동 ON / OFF
 
     elif command == "ACCELERATE":
-        # 최고 속도의 기준치를 잡아야할거 같음
+
         if car_controller.get_speed() >= 200:
             print("200 이상으로 속도를 높힐 수 없음")
             return
 
-        if car_controller.get_trunk_status():
+        if not car_controller.get_trunk_status() :
             print("트렁크 문이 열려있습니다. 가속할 수 없습니다.")
             return
         if car_controller.get_right_door_status() == "Opened":
@@ -27,18 +27,16 @@ def execute_command_callback(command, car_controller):
             print("왼쪽 문이 열려있습니다. 가속할 수 없습니다.")
             return
 
-
         car_controller.accelerate()  # 속도 +10
 
         if car_controller.get_speed() >= 10:
             car_controller.lock_vehicle()
 
-
     elif command == "BRAKE":
 
-         car_controller.brake()
 
 
+         car_controller.brake()   # 감속 -10
 
     elif command == "LOCK":
         car_controller.lock_vehicle() # 차량잠금
