@@ -11,10 +11,31 @@ def execute_command_callback(command, car_controller):
                 car_controller.toggle_engine() # ON -> OFF 동작
         else: # 시동 OFF -> ON
             car_controller.toggle_engine() # 시동 ON / OFF
+        car_controller.toggle_engine() # 시동 ON / OFF
+
     elif command == "ACCELERATE":
+
+        if car_controller.get_speed() >= 200:
+            print("200 이상으로 속도를 높힐 수 없음")
+            return
+
+        if not car_controller.get_trunk_status() :
+            print("트렁크 문이 열려있습니다. 가속할 수 없습니다.")
+            return
+        if car_controller.get_right_door_status() == "Opened":
+            print("오른쪽 문이 열려있습니다. 가속할 수 없습니다.")
+            return
+        if car_controller.get_left_door_status() == "Opened":
+            print("왼쪽 문이 열려있습니다. 가속할 수 없습니다.")
+            return
+
         car_controller.accelerate()  # 속도 +10
+        if car_controller.get_speed() >= 10:
+            car_controller.lock_vehicle()
+
     elif command == "BRAKE":
-        car_controller.brake()  # 속도 -10
+         car_controller.brake()   # 감속 -10
+
     elif command == "LOCK":
         car_controller.lock_vehicle()  # 차량잠금
     elif command == "UNLOCK":
