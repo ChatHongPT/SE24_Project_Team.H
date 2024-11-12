@@ -26,32 +26,14 @@ def execute_command_callback(command, car_controller):
         car_controller.unlock_vehicle()  # 차량 잠금 해제
 
     elif command == "LEFT_DOOR_LOCK":
-        if car_controller.get_left_door_status() == "OPEN":
-            print("Command failed: 왼쪽 문이 열려 있어 잠글 수 없습니다.")
-            return
-        car_controller.lock_left_door()  # 왼쪽 문 잠금
-        print("왼쪽 문이 잠겼습니다.")
-
+        car_controller.lock_left_door() # 왼쪽문 잠금
     elif command == "RIGHT_DOOR_LOCK":
-        if car_controller.get_right_door_status() == "OPEN":
-            print("Command failed: 오른쪽 문이 열려 있어 잠글 수 없습니다.")
-            return
-        car_controller.lock_right_door()  # 오른쪽 문 잠금
-        print("오른쪽 문이 잠겼습니다.")
+        car_controller.lock_right_door() # 오른쪽문 잠금
 
     elif command == "LEFT_DOOR_UNLOCK":
-        if current_speed > 0:
-            print(f"Command failed: 현재 속도가 {current_speed}km/h로 문 잠금 해제 불가.")
-            return
-        car_controller.unlock_left_door()  # 왼쪽 문 잠금 해제
-        print("왼쪽 문 잠금이 해제되었습니다.")
-
+        car_controller.unlock_left_door() # 왼쪽문 잠금해제
     elif command == "RIGHT_DOOR_UNLOCK":
-        if current_speed > 0:
-            print(f"Command failed: 현재 속도가 {current_speed}km/h로 문 잠금 해제 불가.")
-            return
-        car_controller.unlock_right_door()  # 오른쪽 문 잠금 해제
-        print("오른쪽 문 잠금이 해제되었습니다.")
+        car_controller.unlock_right_door() # 오른쪽문 잠금해제
 
     elif command == "LEFT_DOOR_OPEN":
         if car_controller.get_left_door_status() == "LOCKED":
