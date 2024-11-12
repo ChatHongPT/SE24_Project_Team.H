@@ -8,11 +8,7 @@ def execute_command_callback(command, car_controller):
     if command == "ENGINE_BTN":
         car_controller.toggle_engine()  # 시동 ON / OFF
     elif command == "ACCELERATE":
-        # 트렁크가 열려있으면 주행 불가
-        if not car_controller.get_trunk_status():  # 트렁크가 열려있으면 주행 불가
-            print("트렁크가 열린 상태에서는 주행할 수 없습니다.")
-        else:
-            car_controller.accelerate()  # 속도 +10
+        car_controller.accelerate()  # 속도 +10
     elif command == "BRAKE":
         car_controller.brake()  # 속도 -10
     elif command == "LOCK":
