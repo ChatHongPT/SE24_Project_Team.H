@@ -8,26 +8,86 @@ from gui import CarSimulatorGUI
 # -> 이 함수에서 시그널을 입력받고 처리하는 로직을 구성하면, 알아서 GUI에 연동이 됩니다.
 
 def execute_command_callback(command, car_controller):
+    current_speed = car_controller.get_speed()
+
     if command == "ENGINE_BTN":
-        car_controller.toggle_engine() # 시동 ON / OFF
+        car_controller.toggle_engine()  # 시동 ON / OFF
+
     elif command == "ACCELERATE":
-        car_controller.accelerate() # 속도 +10
+        car_controller.accelerate()  # 속도 +10
+
     elif command == "BRAKE":
-        car_controller.brake() # 속도 -10
+        car_controller.brake()  # 속도 -10
+
     elif command == "LOCK":
-        car_controller.lock_vehicle() # 차량잠금
+        car_controller.lock_vehicle()  # 차량 잠금
+
     elif command == "UNLOCK":
-        car_controller.unlock_vehicle() # 차량잠금해제
+        car_controller.unlock_vehicle()  # 차량 잠금 해제
+
     elif command == "LEFT_DOOR_LOCK":
-        car_controller.lock_left_door() # 왼쪽문 잠금
+        if car_controller.get_left_door_status() == "OPEN":
+            print("Command failed: 왼쪽 문이 열려 있어 잠글 수 없습니다.")
+            return
+        car_controller.lock_left_door()  # 왼쪽 문 잠금
+        print("왼쪽 문이 잠겼습니다.")
+
+    elif command == "RIGHT_DOOR_LOCK":
+        if car_controller.get_right_door_status() == "OPEN":
+            print("Command failed: 오른쪽 문이 열려 있어 잠글 수 없습니다.")
+            return
+        car_controller.lock_right_door()  # 오른쪽 문 잠금
+        print("오른쪽 문이 잠겼습니다.")
+
     elif command == "LEFT_DOOR_UNLOCK":
-        car_controller.unlock_left_door() # 왼쪽문 잠금해제
+        if current_speed > 0:
+            print(f"Command failed: 현재 속도가 {current_speed}km/h로 문 잠금 해제 불가.")
+            return
+        car_controller.unlock_left_door()  # 왼쪽 문 잠금 해제
+        print("왼쪽 문 잠금이 해제되었습니다.")
+
+    elif command == "RIGHT_DOOR_UNLOCK":
+        if current_speed > 0:
+            print(f"Command failed: 현재 속도가 {current_speed}km/h로 문 잠금 해제 불가.")
+            return
+        car_controller.unlock_right_door()  # 오른쪽 문 잠금 해제
+        print("오른쪽 문 잠금이 해제되었습니다.")
+
     elif command == "LEFT_DOOR_OPEN":
-        car_controller.open_left_door() # 왼쪽문 열기
+        if car_controller.get_left_door_status() == "LOCKED":
+            print("Command failed: 왼쪽 문이 잠겨 있어 열 수 없습니다.")
+            return
+        car_controller.open_left_door()  # 왼쪽 문 열기
+        print("왼쪽 문이 열렸습니다.")
+
+    elif command == "RIGHT_DOOR_OPEN":
+        if car_controller.get_right_door_status() == "LOCKED":
+            print("Command failed: 오른쪽 문이 잠겨 있어 열 수 없습니다.")
+            return
+        car_controller.open_right_door()  # 오른쪽 문 열기
+        print("오른쪽 문이 열렸습니다.")
+
     elif command == "LEFT_DOOR_CLOSE":
-        car_controller.close_left_door() # 왼쪽문 닫기
+        if car_controller.get_left_door_status() == "CLOSED":
+            print("Command failed: 왼쪽 문이 이미 닫혀 있습니다.")
+            return
+        car_controller.close_left_door()  # 왼쪽 문 닫기
+        print("왼쪽 문이 닫혔습니다.")
+
+    elif command == "RIGHT_DOOR_CLOSE":
+        if car_controller.get_right_door_status() == "CLOSED":
+            print("Command failed: 오른쪽 문이 이미 닫혀 있습니다.")
+            return
+        car_controller.close_right_door()  # 오른쪽 문 닫기
+        print("오른쪽 문이 닫혔습니다.")
+
     elif command == "TRUNK_OPEN":
-        car_controller.open_trunk() # 트렁크 열기
+        car_controller.open_trunk()  # 트렁크 열기
+        print("트렁크가 열렸습니다.")
+
+    elif command == "TRUNK_CLOSE":
+        car_controller.close_trunk()  # 트렁크 닫기
+        print("트렁크가 닫혔습니다.")
 
 
 # 파일 경로를 입력받는 함수
