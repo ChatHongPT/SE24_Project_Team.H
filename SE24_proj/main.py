@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import threading
 from car import Car
 from car_controller import CarController
@@ -170,4 +168,3 @@ if __name__ == "__main__":
 
     # GUI 시작 (메인 스레드에서 실행)
     gui.start()
->>>>>>> origin/jaejae
