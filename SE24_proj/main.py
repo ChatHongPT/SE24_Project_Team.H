@@ -17,61 +17,24 @@ def execute_command_callback(command, car_controller):
             print("200 이상으로 속도를 높힐 수 없음")
             return
 
-        # 왼쪽 문 검증
-        if car_controller.get_left_door_status() == "Closed":
-            if car_controller.get_left_door_lock() == "unLocked":
-                car_controller.lock_left_door()
-        else:
-            car_controller.close_left_door()
-            car_controller.lock_left_door()
+        if car_controller.get_trunk_status():
+            print("트렁크 문이 열려있습니다. 가속할 수 없습니다.")
+            return
+        if car_controller.get_right_door_status() == "Opened":
+            print("오른쪽 문이 열려있습니다. 가속할 수 없습니다.")
+            return
+        if car_controller.get_left_door_status() == "Opened":
+            print("왼쪽 문이 열려있습니다. 가속할 수 없습니다.")
+            return
 
-        # 오른쪽 문 검증
-        if car_controller.get_right_door_status() == "Closed":
-            if car_controller.get_right_door_lock() == "unLocked":
-                car_controller.lock_right_door()
-        else:
-            car_controller.close_right_door()
-            car_controller.lock_right_door()
 
-        # 트렁크 검증
-        if car_controller.get_trunk_status() == "Opened":
-            car_controller.close_trunk()
-
-        # accelerate 자체에 엔진 조건이 걸려 있음
         car_controller.accelerate()  # 속도 +10
 
-        # 속도가 10이상이 넘어가면 문잠금   ,  오른쪽 왼쪽 문잠금은 앞에서 검증하기 때문에 얘기해봐야할거 같음
         if car_controller.get_speed() >= 10:
             car_controller.lock_vehicle()
 
 
-        ### 가속의 Exception Path에서 하나라도 OPEN이면 가속이 불가능 하다 했는데 앞에서 검증 과정을 하기 때문에 필요한지 의문(얘기가 필요함)
-
-        #if car_controller.get_trunk_status() == "Opened":
-        #    print("트렁크 문이 열려있습니다. 가속할 수 없습니다.")
-        #   return
-        #if car_controller.get_right_door_status() == "Opened":
-        #    print("오른쪽 문이 열려있습니다. 가속할 수 없습니다.")
-        #    return
-        #if car_controller.get_left_door_status() == "Opened":
-        #    print("왼쪽 문이 열려있습니다. 가속할 수 없습니다.")
-        #    return
-
-
-
     elif command == "BRAKE":
-
-        # 브레이크는 가속이 선행되어야 하기 때문에 왼쪽, 오른쪽, 트렁크 검증이 필요없어 보임 (srs에는 명세되어 있지 않는 내용임)
-
-         if car_controller.get_trunk_status() == "Opened":
-            print("트렁크 문이 열려있습니다.")
-            return
-         if car_controller.get_right_door_status() == "Opened":
-            print("오른쪽 문이 열려있습니다. ")
-            return
-         if car_controller.get_left_door_status() == "Opened":
-            print("왼쪽 문이 열려있습니다. ")
-            return
 
          car_controller.brake()
 
