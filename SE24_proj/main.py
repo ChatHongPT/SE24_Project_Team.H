@@ -6,7 +6,6 @@ from gui import CarSimulatorGUI
 # execute_command를 제어하는 콜백 함수
 def execute_command_callback(command, car_controller):
     if command == "ENGINE_BTN":
-<<<<<<< HEAD
         if car_controller.get_engine_status(): # 시동 ON -> OFF
             if car_controller.get_speed() == 0: # 속도가 0이어야
                 car_controller.toggle_engine() # ON -> OFF 동작
@@ -21,12 +20,27 @@ def execute_command_callback(command, car_controller):
     elif command == "UNLOCK":
         car_controller.unlock_vehicle()  # 차량잠금해제
     elif command == "LEFT_DOOR_LOCK":
+        if car_controller.get_left_door_status() == "OPEN":
+            print("Command failed: 왼쪽문 닫아라")
+            return
         car_controller.lock_left_door()  # 왼쪽문 잠금
+
     elif command == "RIGHT_DOOR_LOCK":
+        if car_controller.get_right_door_status() == "OPEN":
+            print("Command failed: 오른문 닫아라")
+            return
         car_controller.lock_right_door()  # 오른쪽문 잠금
+
     elif command == "LEFT_DOOR_UNLOCK":
+        if car_controller.get_speed() > 0:
+            print("Command failed: 멈춰라")
+            return
         car_controller.unlock_left_door()  # 왼쪽문 잠금해제
+
     elif command == "RIGHT_DOOR_UNLOCK":
+        if car_controller.get_speed() > 0:
+            print("Command failed: 멈춰라")
+            return
         car_controller.unlock_right_door()  # 오른쪽문 잠금해제
     elif command == "LEFT_DOOR_OPEN":
         car_controller.open_left_door()  # 왼쪽문 열기
@@ -46,61 +60,7 @@ def execute_command_callback(command, car_controller):
                 print("트렁크가 이미 열려 있습니다.")
         else:
             print("속도가 0이 아닙니다. 차량을 정지한 후 트렁크를 열 수 있습니다.")
-=======
         car_controller.toggle_engine() # 시동 ON / OFF
-
-    elif command == "ACCELERATE":
-        car_controller.accelerate() # 속도 +10
-
-    elif command == "BRAKE":
-        car_controller.brake() # 속도 -10
-
-    elif command == "LOCK":
-        car_controller.lock_vehicle() # 차량잠금        
-
-    elif command == "UNLOCK":
-        car_controller.unlock_vehicle() # 차량잠금해제
-
-    elif command == "LEFT_DOOR_LOCK":
-        if car_controller.get_left_door_status() == "OPEN":
-            print("Command failed: 왼쪽문 닫아라")
-            return
-        car_controller.lock_left_door() # 왼쪽문 잠금
-
-    elif command == "RIGHT_DOOR_LOCK":
-        if car_controller.get_right_door_status() == "OPEN":
-            print("Command failed: 오른문 닫아라")
-            return
-        car_controller.lock_right_door()  # 오른쪽문 잠금
-
-    elif command == "LEFT_DOOR_UNLOCK":
-        if car_controller.get_speed() > 0:
-            print("Command failed: 멈춰라")
-            return
-        car_controller.unlock_left_door() # 왼쪽문 잠금해제
-
-    elif command == "RIGHT_DOOR_UNLOCK":
-        if car_controller.get_speed() > 0:
-            print("Command failed: 멈춰라")
-            return
-        car_controller.unlock_right_door() # 오른쪽문 잠금해제
-
-    elif command == "LEFT_DOOR_OPEN":
-        car_controller.open_left_door() # 왼쪽문 열기
-
-    elif command == "RIGHT_DOOR_OPEN":
-        car_controller.open_right_door() # 오른쪽문 열기
-
-    elif command == "LEFT_DOOR_CLOSE":
-        car_controller.close_left_door() # 왼쪽문 닫기
-
-    elif command == "RIGHT_DOOR_CLOSE":
-        car_controller.close_right_door() # 오른쪽문 닫기
-
-    elif command == "TRUNK_OPEN":
-        car_controller.open_trunk() # 트렁크 열기
-
->>>>>>> origin/jingyu
     elif command == "TRUNK_CLOSE":
         # 트렁크가 열린 상태일 때만 닫기 가능
         if not car_controller.get_trunk_status():  # 트렁크가 열려 있는 경우
