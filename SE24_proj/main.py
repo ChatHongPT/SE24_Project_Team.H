@@ -36,13 +36,13 @@ def execute_command_callback(command, car_controller):
         car_controller.lock_right_door()  # 오른쪽문 잠금
 
     elif command == "LEFT_DOOR_UNLOCK":
-        if car_controller.get_speed > 0:
+        if car_controller.get_speed() > 0:
             print("Command failed: 멈춰라")
             return
         car_controller.unlock_left_door() # 왼쪽문 잠금해제
 
     elif command == "RIGHT_DOOR_UNLOCK":
-        if car_controller.get_speed > 0:
+        if car_controller.get_speed() > 0:
             print("Command failed: 멈춰라")
             return
         car_controller.unlock_right_door() # 오른쪽문 잠금해제
