@@ -139,6 +139,14 @@ def execute_command_callback(command, car_controller):
             print("트렁크가 닫혔습니다.")
         else:
             print("트렁크가 이미 닫혀 있습니다.")
+    elif command == "SOS":
+        while car_controller.get_speed() > 0:
+            car_controller.brake()
+        car_controller.unlock_vehicle()
+        car_controller.unlock_left_door()
+        car_controller.unlock_right_door()
+        car_controller.open_trunk()
+
 
 
 # 파일 경로를 입력받는 함수
