@@ -45,8 +45,7 @@ class TestCarSystem(unittest.TestCase):
         execute_command_callback("LEFT_DOOR_LOCK", self.car_controller)
         self.assertEqual(self.car_controller.get_left_door_lock(), 'LOCKED')  # 왼쪽 도어 잠금 해제 상태 확인
 
-
-    def test_right_door_lock_unlock(self):
+     def test_right_door_lock_unlock(self):
         # 오른쪽 도어 잠금 해제 테스트
         execute_command_callback("RIGHT_DOOR_UNLOCK", self.car_controller)
         self.assertEqual(self.car_controller.get_right_door_lock(), 'UNLOCKED')
