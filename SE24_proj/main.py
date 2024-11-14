@@ -80,15 +80,28 @@ def execute_command_callback(command, car_controller):
         car_controller.lock_right_door()  # 오른쪽문 잠금
 
     elif command == "LEFT_DOOR_UNLOCK":
+        if car_controller.get_lock_status():
+            print("Command failed: 차량 전체 잠금이 설정되어있습니다. 문 못연다")
+            return False
         if car_controller.get_speed() > 0:
             print("Command failed: 차량이 주행 중입니다. 왼쪽 문 잠금해제 불가")
             return
+        # if car_controller.get_lock_status():
+        #     print("Command failed: 차량 전체 잠금이 설정되어있습니다. 문 못연다")
+        #     return False
         car_controller.unlock_left_door()  # 왼쪽문 잠금해제
 
     elif command == "RIGHT_DOOR_UNLOCK":
+        if car_controller.get_lock_status():
+            print("Command failed: 차량 전체 잠금이 설정되어있습니다. 문 못연다")
+            return False
         if car_controller.get_speed() > 0:
             print("Command failed: 차량이 주행 중입니다. 오른쪽 문 잠금해제 불가")
             return
+        # if car_controller.get_lock_status():
+        #     print("Command failed: 차량 전체 잠금이 설정되어있습니다. 문 못연다")
+        #     return False
+
         car_controller.unlock_right_door()  # 오른쪽문 잠금해제
 
     elif command == "LEFT_DOOR_OPEN":
