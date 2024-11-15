@@ -45,7 +45,7 @@ def execute_command_callback(command, car_controller):
     elif command == "BRAKE":
          car_controller.brake()
 
-#자동차 전체 문잠금
+#자동차 전체 문 잠금
     elif command == "LOCK":
         if car_controller.get_lock_status():
             print("Command failed: 이미 문이 잠겨있습니다.")
@@ -60,16 +60,12 @@ def execute_command_callback(command, car_controller):
             car_controller.lock_left_door()
             car_controller.lock_right_door()
 
-#자동차 전체 문잠금 해제
+#자동차 전체 문 잠금 해제
     elif command == "UNLOCK":
         if (car_controller.get_speed() > 0):
             print("Command failed: 주행 중으로 문을 잠금 해제 할 수 없습니다.")
         elif not car_controller.get_lock_status():
             print("Command failed: 이미 문의 잠금이 해제되어 있습니다.")
-        elif car_controller.get_right_door_status() == "OPEN":
-            print("Command failed: 오른쪽 문이 열려있습니다.")
-        elif car_controller.get_left_door_status() == "OPEN":
-            print("Command failed: 왼쪽 문이 열려있습니다.")
         else:
             car_controller.unlock_vehicle()
             car_controller.unlock_left_door()
@@ -98,10 +94,10 @@ def execute_command_callback(command, car_controller):
 #왼쪽 문 잠금해제
     elif command == "LEFT_DOOR_UNLOCK":
         if car_controller.get_lock_status():
-            print("Command failed: 차량 전체 잠금이 설정되어있습니다. 문을 열 수 없습니다")
+            print("Command failed: 차량 전체 잠금이 설정되어있습니다. 잠금을 해제할 수 없습니다")
             return
         elif car_controller.get_speed() > 0:
-            print("Command failed: 차량이 주행 중입니다. 왼쪽 문 잠금해제 불가")
+            print("Command failed: 차량이 주행 중입니다. 왼쪽 문을 잠금해제 할 수 없습니다.")
             return
         elif car_controller.get_left_door_lock() == "UNLOCKED":
             print("Command failed: 이미 왼쪽 문의 잠금이 해제되어 있습니다.")
@@ -111,10 +107,10 @@ def execute_command_callback(command, car_controller):
 #오른쪽 문 잠금 해제
     elif command == "RIGHT_DOOR_UNLOCK":
         if car_controller.get_lock_status():
-            print("Command failed: 차량 전체 잠금이 설정되어있습니다. 문 못연다")
+            print("Command failed: 차량 전체 잠금이 설정되어있습니다. 잠금을 해제할 수 없습니다.")
             return
         elif car_controller.get_speed() > 0:
-            print("Command failed: 차량이 주행 중입니다. 오른쪽 문 잠금해제 불가")
+            print("Command failed: 차량이 주행 중입니다. 오른쪽 문을 잠금해제 할 수 없습니다.")
             return
         elif car_controller.get_left_door_lock() == "UNLOCKED":
             print("Command failed: 이미 오른쪽 문의 잠금이 해제되어 있습니다.")
@@ -161,7 +157,6 @@ def execute_command_callback(command, car_controller):
         print("오른쪽 문이 닫혔습니다.")
 
 #트렁크 열기
-#memo: 전체 문잠금 할때, 트렁크도 잠그는건가?
     elif command == "TRUNK_OPEN":
         if car_controller.get_speed() > 0:
             print("Command failed: 속도가 0이 아닙니다. 차량을 정지한 후 트렁크를 열 수 있습니다.")
