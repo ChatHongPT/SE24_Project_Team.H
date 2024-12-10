@@ -13,20 +13,15 @@ def execute_command_callback(command, car_controller):
         if not car_controller.get_engine_status():
             car_controller.toggle_engine()
             print("시동이 켜졌습니다.")
-        elif car_controller.get_speed() == 0:
-            car_controller.toggle_engine()
-            print("시동이 꺼졌습니다.")
         return
 #시동
     if command == "ENGINE_BTN":
         if car_controller.get_engine_status():
-            # 과제 3 제외 시동 끌 때도 동시적 입력 필요
-            print("Command failed: 브레이크를 밟은 상태에서만 시동을 걸 수 있습니다.")
-            # if car_controller.get_speed() != 0:
-            #     print("Command failed: 주행 중으로 시동을 끌 수 없습니다.")
-            # else:
-            #     car_controller.toggle_engine()
-            #     print("시동이 꺼졌습니다.")
+            if car_controller.get_speed() != 0:
+                print("Command failed: 주행 중으로 시동을 끌 수 없습니다.")
+            else:
+                car_controller.toggle_engine()
+                print("시동이 꺼졌습니다.")
         else:
             # 과제3 제외 car_controller.toggle_engine()
             print("Command failed: 브레이크를 밟은 상태에서만 시동을 걸 수 있습니다.")
