@@ -11,7 +11,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_engine_toggle(self):
         # ENGINE_BTN 명령 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)
         self.assertTrue(self.car_controller.get_engine_status())  # 엔진이 켜졌는지 확인
 
         execute_command_callback("ENGINE_BTN", self.car_controller)
@@ -19,7 +19,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_accelerate(self):
         # 시동 켜고 가속 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)  # 엔진 켬
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)  # 엔진 켬
         execute_command_callback("ACCELERATE", self.car_controller)  # 가속
         self.assertEqual(self.car_controller.get_speed(), 10)  # 속도가 10인지 확인
 
@@ -30,7 +30,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_brake(self):
         # 시동 켜고 가속 후 감속 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)  # 엔진 켬
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)  # 엔진 켬
         execute_command_callback("ACCELERATE", self.car_controller)  # 가속
         execute_command_callback("BRAKE", self.car_controller)  # 브레이크
         self.assertEqual(self.car_controller.get_speed(), 0)  # 속도가 0인지 확인
@@ -94,7 +94,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_sos(self):
         # 긴급 상황 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)  # 엔진 켬
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)  # 엔진 켬
         execute_command_callback("ACCELERATE", self.car_controller)  # 가속
 
         execute_command_callback("SOS", self.car_controller)
