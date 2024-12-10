@@ -192,6 +192,9 @@ def execute_command_callback(command, car_controller):
             car_controller.close_trunk()
             print("트렁크가 닫혔습니다.")
         else:
+
+
+
             print("Command failed: 트렁크가 이미 닫혀 있습니다.")
 
 #긴급 SOS
