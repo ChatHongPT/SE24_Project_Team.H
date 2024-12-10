@@ -11,7 +11,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_engine_toggle(self):
         # ENGINE_BTN 명령 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)
         self.assertTrue(self.car_controller.get_engine_status())  # 엔진이 켜졌는지 확인
 
         execute_command_callback("ENGINE_BTN", self.car_controller)
@@ -19,7 +19,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_accelerate(self):
         # 시동 켜고 가속 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)  # 엔진 켬
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)  # 엔진 켬
         execute_command_callback("ACCELERATE", self.car_controller)  # 가속
         self.assertEqual(self.car_controller.get_speed(), 10)  # 속도가 10인지 확인
 
@@ -30,7 +30,7 @@ class TestCarSystem(unittest.TestCase):
 
     def test_brake(self):
         # 시동 켜고 가속 후 감속 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)  # 엔진 켬
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)  # 엔진 켬
         execute_command_callback("ACCELERATE", self.car_controller)  # 가속
         execute_command_callback("BRAKE", self.car_controller)  # 브레이크
         self.assertEqual(self.car_controller.get_speed(), 0)  # 속도가 0인지 확인
@@ -90,9 +90,29 @@ class TestCarSystem(unittest.TestCase):
         execute_command_callback("TRUNK_CLOSE", self.car_controller)
         self.assertTrue(self.car_controller.get_trunk_status())  # 트렁크가 닫혔는지 확인
 
+    def test_engine_toggle_fail(self):
+        # 트렁크 열기/닫기 테스트
+        execute_command_callback("UNLOCK", self.car_controller)
+
+        execute_command_callback("ENGINE_BTN", self.car_controller)
+        self.assertFalse(self.car_controller.get_trunk_status())  # 엔진 버튼만 입력 들어올 때 확인
+
+        execute_command_callback("ACCELERATE", self.car_controller)
+        self.assertTrue(self.car_controller.get_trunk_status())  # 시동 안 걸렸을 때 가속 가능한지 확인
+    
+    def test_engine_toggle_fail2(self):
+        # 트렁크 열기/닫기 테스트
+        execute_command_callback("UNLOCK", self.car_controller)
+
+        execute_command_callback("BRAKE ENGINE_BTN BRAKE ENGINE_BTN BRAKE ENGINE_BTN", self.car_controller)
+        self.assertFalse(self.car_controller.get_trunk_status())  # 한 줄에 여러 인자 값이 들어올 때 예외처리 잘 되는지 확인
+
+        execute_command_callback("ACCELERATE", self.car_controller)
+        self.assertTrue(self.car_controller.get_trunk_status())  # 시동 안 걸렸을 때 가속 가능한지 확인
+
     def test_sos(self):
         # 긴급 상황 테스트
-        execute_command_callback("ENGINE_BTN", self.car_controller)  # 엔진 켬
+        execute_command_callback("BREAK ENGINE_BTN", self.car_controller)  # 엔진 켬
         execute_command_callback("ACCELERATE", self.car_controller)  # 가속
 
         execute_command_callback("SOS", self.car_controller)

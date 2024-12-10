@@ -5,31 +5,17 @@ from gui import CarSimulatorGUI
 
 # execute_command를 제어하는 콜백 함수
 def execute_command_callback(command, car_controller):
-    # 과제3 추가 요구 조건을 위한 동시 명령어 분리
-    commands = command.split()
-    # 과제3 만약 브레이크와 엔진버튼이 각각 인수로 차례대로 입력되면 브레이크 밟고 엔진점화 시작.
-    if len(commands) == 2 and commands[0] == "BRAKE" and commands[1] == "ENGINE_BTN":
-        car_controller.brake()
-        if not car_controller.get_engine_status():
-            car_controller.toggle_engine()
-            print("시동이 켜졌습니다.")
-        elif car_controller.get_speed() == 0:
-            car_controller.toggle_engine()
-            print("시동이 꺼졌습니다.")
-        return
 #시동
     if command == "ENGINE_BTN":
         if car_controller.get_engine_status():
-            # 과제 3 제외 시동 끌 때도 동시적 입력 필요
-            print("Command failed: 브레이크를 밟은 상태에서만 시동을 걸 수 있습니다.")
-            # if car_controller.get_speed() != 0:
-            #     print("Command failed: 주행 중으로 시동을 끌 수 없습니다.")
-            # else:
-            #     car_controller.toggle_engine()
-            #     print("시동이 꺼졌습니다.")
+            if car_controller.get_speed() != 0:
+                print("Command failed: 주행 중으로 시동을 끌 수 없습니다.")
+            else:
+                car_controller.toggle_engine()
+                print("시동이 꺼졌습니다.")
         else:
-            # 과제3 제외 car_controller.toggle_engine()
-            print("Command failed: 브레이크를 밟은 상태에서만 시동을 걸 수 있습니다.")
+            car_controller.toggle_engine()
+            print("시동이 켜졌습니다.")
 
 #가속
     elif command == "ACCELERATE":
@@ -196,6 +182,7 @@ def execute_command_callback(command, car_controller):
 
 
             print("Command failed: 트렁크가 이미 닫혀 있습니다.")
+
 
 #긴급 SOS
     elif command == "SOS":
