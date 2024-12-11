@@ -110,7 +110,7 @@ class TestCarSystem(unittest.TestCase):
         self.assertFalse(self.car_controller.get_engine_status())  # 엔진 버튼만 입력 들어올 때 확인
 
         execute_command_callback("ACCELERATE", self.car_controller)
-        self.assertEqual(self.car_controller.get_speed(), 10)  # 시동 안 걸렸을 때 가속 되었는지 확인
+        self.assertEqual(self.car_controller.get_speed(), 0)  # 시동 안 걸렸을 때 가속 되었는지 확인
 
     def test_engine_toggle_fail2(self):
         # 브레이크 밟은 상태에서 엔진 버튼 여러 번 눌렀을 때 실패
@@ -120,7 +120,7 @@ class TestCarSystem(unittest.TestCase):
         self.assertFalse(self.car_controller.get_engine_status())  # 한 줄에 여러 인자 값이 들어올 때 예외처리 잘 되는지 확인
 
         execute_command_callback("ACCELERATE", self.car_controller)
-        self.assertEqual(self.car_controller.get_speed(), 10)  # 시동 안 걸렸을 때 가속 되었는지 확인
+        self.assertEqual(self.car_controller.get_speed(), 0)  # 시동 안 걸렸을 때 가속 되었는지 확인
 
 
 if __name__ == "__main__":
