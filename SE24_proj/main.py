@@ -9,12 +9,11 @@ def execute_command_callback(command, car_controller):
     commands = command.split()
     # 과제3 만약 브레이크와 엔진버튼이 각각 인수로 차례대로 입력되면 브레이크 밟고 엔진점화 시작.
     if len(commands) == 2 and commands[0] == "BRAKE" and commands[1] == "ENGINE_BTN":
-        car_controller.brake()
         if not car_controller.get_engine_status():
             car_controller.toggle_engine()
             print("시동이 켜졌습니다.")
         return
-#시동
+#시동g
     if command == "ENGINE_BTN":
         if car_controller.get_engine_status():
             if car_controller.get_speed() != 0:
